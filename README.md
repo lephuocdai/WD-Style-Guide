@@ -124,9 +124,9 @@ window.addEventListener("load", function() {
 Both methods share the useful property of a private scope.  
 `this` still refers to the `window` object, but variables are no longer automatically appended to it.  
 
-In the first example I also added a semicolon infront of the declaration. This ensures that our anonymous function won't trigger a function call and end up being an argument in case another script is loaded before yours.  
+In the first example we also added a semicolon infront of the declaration. This ensures that our anonymous function won't trigger a function call and end up being an argument in case another script is loaded before yours.  
 
-I also passed the window object and defined an undefined argument named undefined.  
+We also passed the window object and defined an undefined argument named undefined.  
 This way, we can be sure that these two variables have and will not be altered in any way.
 
 
@@ -215,7 +215,7 @@ And last but not least, make sure your files are saved with utf-8 as well.
 ##Single and double quotes
 
 In javascript there is not a big difference in using `'` instead of `"` for strings.  
-I prefere double quotes because they require no shift key to be pressed.
+I prefer double quotes because they require no shift key to be pressed.
 
 Beware with PHP though, let's say we have the following:
 ```php
