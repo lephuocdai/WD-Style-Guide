@@ -7,19 +7,21 @@ The majority of these conventions focus on readability, maintainability and perf
 ##Index
 
 * [Formating](#formating)
+* [UTF-8](#utf-8)
+* [Script tags](#script-tags)
+* [Variable declaration](#variable-declaration)  
+  &nbsp;
 * [Constructors](#constructors)
 * [Global functions](#global-functions)
-* [Eval](#eval)
-* [Variable declaration](#variable-declaration)
 * [Anonymous functions](#anonymous-functions)
 * [Native array methods](#native-array-methods)
-* [Script tags](#script-tags)
+* [Eval](#eval)  
+  &nbsp;
 * [Line endings](#line-endings)
-* [jQuery selectors](#jquery-selectors)
-* [UTF-8](#utf-8)
 * [Single and double quotes](#single-and-double-quotes)
 * [Shorthand syntax](#shorthand-syntax)
 * [Bitwise operators](#bitwise-operators)
+* [jQuery selectors](#jquery-selectors)
 
 ##Formating
 
@@ -37,6 +39,56 @@ Formatting is the key to readability and maintainability. Let me give you a few 
 * **Adapt to your environment**  
   When you jump on a project, large or small, it is always a good rule to just adapt to the existing code and formating style.
   You can probably make suggestions when you have good arguments like those listet in this guide but simply bringing in your own style will just result in a big mix of differently formatted code which no one likes to maintain.
+
+
+##UTF-8
+
+In a world wide web where every country comes together you probably don't want to fiddle around with all these different charsets and just want a universal alternative that supports every character.
+That's what utf-8 is for. There are two ways to define the utf-8 charset in HTML:  
+
+```html
+<!-- Long and not always interpreted correctly when using HTML5 -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<!-- Short and correct -->
+<meta charset="utf-8">
+```
+
+In PHP, if you don't have root access to change it permanently, it is advised to set the following header:
+```php
+header("Content-Type: text/html; charset=utf-8");
+```
+
+And last but not least, make sure your files are saved with utf-8 as well and you're good to go.
+
+
+##Script tags
+
+Many people including my past self make the "mistake" of defining all their script tags in the header of an html document.
+If it's an inline script tag, meaning it has no source attribute it can be parsed right away. Otherwise a http request has to be sent. The browser usually limits the amount of requests to a single domain.
+
+What all this means is that each new visitor has to wait for all scripts including the pending ones to be loaded and parsed before the page will even get displayed. One way to minimize this duration is to load all your scripts from different or multiple subdomains, which eliminates the request limit.
+
+An even better way would be to simply locate all your script tags at the end of your body. This way, your html and css gets displayed first and then the rest of your javascript files will be requested and parsed in the background. Depending on your website or application this is generally the prefered behaviour.
+
+A last option would be to include an empty `async` attribute in the script tag, which tells *some* browsers to load and parse the script in the background.
+
+
+##Variable declaration
+
+```js
+var string = "foo",
+    number = 3.14,
+    object = {},
+    array = [],
+    
+    lorem,
+    ipsum;
+```
+
+This is a totally valid variable declaration. Beware though, one can easily form a global variable by ending the chain too early with a semilcolon.
+It is also advised to use 4 spaces *only* for the indention of the following variables since browsers and specifically github will have problems formatting it correctly otherwise.
+
 
 ##Constructors
 
@@ -62,47 +114,6 @@ window.parseInt(...)
 
 Using `window` with global functions like those above ensures that the correct function is called and aids the analyzability.  
 Otherwise javascript would check all your scopes to see if these functions already exist.
-
-
-##Eval
-
-There are two functions and one constructor in javascript that use the global function `eval`
-
-* `setInterval`
-* `setTimeout`
-* `Function`
-
-For the functions, it can be avoided by just passing or declearing an anonymous function like this:
-```js
-// Prefered (anonymous)
-window.setInterval(function() { alert("A minute has passed."); }, 1000*60);
-
-// Prefered (passing a function as an argument)
-var custom_alert = function() { alert("A minute has passed."); };
-window.setInterval(custom_alert, 1000*60);
-
-// Should be avoided
-window.setInterval("alert('A minute has passed.');", 1000*60);
-```
-
-As for the constructor, this behaviour cannot be changed.  
-There are only some rare cases when you should or could use `new Function(...)` as well as `eval` itself but that is for you to discover.
-
-
-##Variable declaration
-
-```js
-var string = "foo",
-    number = 3.14,
-    object = {},
-    array = [],
-    
-    lorem,
-    ipsum;
-```
-
-This is a totally valid variable declaration. Beware though, one can easily form a global variable by ending the chain too early with a semilcolon.
-It is also advised to use 4 spaces *only* for the indention of the following variables since browsers and specifically github will have problems formatting it correctly otherwise.
 
 
 ##Anonymous functions 
@@ -156,16 +167,29 @@ Just do this:
 Where `v` is the value of the current index, `i` the current index and `r` a reference to the array itself.
 
 
-##Script tags
+##Eval
 
-Many people including my past self make the "mistake" of defining all their script tags in the header of an html document.
-If it's an inline script tag, meaning it has no source attribute it can be parsed right away. Otherwise a http request has to be sent. The browser usually limits the amount of requests to a single domain.
+There are two functions and one constructor in javascript that use the global function `eval`
 
-What all this means is that each new visitor has to wait for all scripts including the pending ones to be loaded and parsed before the page will even get displayed. One way to minimize this duration is to load all your scripts from different or multiple subdomains, which eliminates the request limit.
+* `setInterval`
+* `setTimeout`
+* `Function`
 
-An even better way would be to simply locate all your script tags at the end of your body. This way, your html and css gets displayed first and then the rest of your javascript files will be requested and parsed in the background. Depending on your website or application this is generally the prefered behaviour.
+For the functions, it can be avoided by just passing or declearing an anonymous function like this:
+```js
+// Prefered (anonymous)
+window.setInterval(function() { alert("A minute has passed."); }, 1000*60);
 
-A last option would be to include an empty `async` attribute in the script tag, which tells *some* browsers to load and parse the script in the background.
+// Prefered (passing a function as an argument)
+var custom_alert = function() { alert("A minute has passed."); };
+window.setInterval(custom_alert, 1000*60);
+
+// Should be avoided
+window.setInterval("alert('A minute has passed.');", 1000*60);
+```
+
+As for the constructor, this behaviour cannot be changed.  
+There are only some rare cases when you should or could use `new Function(...)` as well as `eval` itself but that is for you to discover.
 
 
 ##Line endings
@@ -178,43 +202,6 @@ dolor\r     // mac
 
 Unix line endings are interpreted by all modern browsers and text editors and only use one single character.  
 Switching from windows to unix line endings in a large file can safe quite a few kilo bytes.
-
-
-##jQuery selectors
-
-When using a selector often, it is adivsed to store the returned  jQuery object in a  variable so jQuery doesn't have to do the search query over and over again. It is also a common practice to prepend a `$` infront of the variable name to indicate that it refers to a jQuery object.  
-
-```js
-var $wrapper = $("#wrapper");
-```
-
-Did you know that there is also a native query selector supported by IE8 and up?
-
-```js
-var wrapper = document.querySelector("#wrapper");
-```
-
-It accepts any standardized css selector queries and is pretty useful for small projects that don't want to depend on jQuery.
-
-
-##UTF-8
-
-There are two ways to define the utf-8 charset in HTML:  
-
-```html
-<!-- Long and not always interpreted correctly when using HTML5 -->
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-
-<!-- Short and correct -->
-<meta charset="utf-8">
-```
-
-In PHP, if you don't have root access to change it permanently, it is advised to set the following header:
-```php
-header("Content-Type: text/html; charset=utf-8");
-```
-
-And last but not least, make sure your files are saved with utf-8 as well.
 
 
 ##Single and double quotes
@@ -245,12 +232,13 @@ It finds `$s` and replaces it with the value of that variable (apples).
 \- In the second one we have two strings, and again PHP scans both of them for variables.  
 \- In the third one we use single quotes, telling PHP not to expect any variable expressions in our string.
 
+Thus, the third one is likely to execute the fastest.  
 So remeber, anytime you use strings without variable expressions use single quotes ( `'` ).
 
 
 ##Shorthand syntax
 
-Every developer should know their shorthand syntax.
+Every developer should know their shorthand syntax.  
 Here are a few handy ones for javascript:
 ```js
 var a = []; // new Array()
@@ -273,3 +261,20 @@ n >> m;  === Math.floor(n / Math.pow(2, m))
 n << m;  === Math.floor(n * Math.pow(2, m))
 2.7 | 0; === Math.floor(2.7)
 ```
+
+
+##jQuery selectors
+
+When using a selector often, it is adivsed to store the returned  jQuery object in a  variable so jQuery doesn't have to do the search query over and over again. It is also a common practice to prepend a `$` infront of the variable name to indicate that it refers to a jQuery object.  
+
+```js
+var $wrapper = $("#wrapper");
+```
+
+Did you know that there is also a native query selector supported by IE8 and up?
+
+```js
+var wrapper = document.querySelector("#wrapper");
+```
+
+It accepts any standardized css selector queries and is pretty useful for small projects that don't want to depend on jQuery.
