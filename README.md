@@ -179,16 +179,18 @@ Switching from windows to unix line endings in a large file can safe quite a few
 
 ##jQuery selectors
 
+When using a selector often, it is adivsed to store the returned  jQuery object in a  variable so jQuery doesn't have to do the search query over and over again. It is also a common practice to prepend a `$` infront of the variable name to indicate that it refers to a jQuery object.  
+
 ```js
 var $wrapper = $("#wrapper");
 ```
 
-When using a selector often, it is adivsed to store the returned  jQuery object in a  variable so jQuery doesn't have to do the search query over and over again. It is also a common practice to prepend a `$` infront of the variable name to indicate that it refers to a jQuery object.  
-
 Did you know that there is also a native query selector supported by IE8 and up?
+
 ```js
 var wrapper = document.querySelector("#wrapper");
 ```
+
 It accepts any standardized css selector queries and is pretty useful for small projects that don't want to depend on jQuery.
 
 
