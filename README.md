@@ -34,6 +34,9 @@ Formatting is the key to readability and maintainability. Let me give you a few 
   
   No one should ever think about manually minifing their code, especially when in development. Minifing is an automated process for "end users" to save bandwidth and nothing more.
 
+* **Adapt to your environment**  
+  When you jump on a project, large or small, it is always a good rule to just adapt to the existing code and formating style.
+  You can probably make suggestions when you have good arguments like those listet in this guide but simply bringing in your own style will just result in a big mix of differently formatted code which no one likes to maintain.
 
 ##Constructors
 
