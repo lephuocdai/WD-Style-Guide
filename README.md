@@ -6,7 +6,7 @@ The majority of these conventions focus on readability, maintainability and perf
 
 ##Index
 
-* [Formating](#formating)
+* [Formatting](#formatting)
 * [UTF-8](#utf-8)
 * [Script tags](#script-tags)
 * [Variable declaration](#variable-declaration)  
@@ -23,7 +23,7 @@ The majority of these conventions focus on readability, maintainability and perf
 * [Bitwise operators](#bitwise-operators)
 * [jQuery selectors](#jquery-selectors)
 
-##Formating
+##Formatting
 
 Formatting is the key to readability and maintainability. Let me give you a few examples of good practice:
 
